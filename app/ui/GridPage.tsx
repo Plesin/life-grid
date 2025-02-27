@@ -1,10 +1,18 @@
 import { Calendar } from "lucide-react";
 import { useState, useEffect } from "react";
 
+import { LocalStorageUtil } from "../utils/LocalStorageUtil";
+
 export function GridPage() {
-  const [birthdate, setBirthdate] = useState<string>("");
+  const bdFromStorage = LocalStorageUtil.get("birthdate");
+  const [birthdate, setBirthdate] = useState<string>(bdFromStorage ?? "");
   const [age, setAge] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBirthdate(e.target.value);
+    LocalStorageUtil.set("birthdate", e.target.value);
+  };
 
   // Calculate age based on birthdate
   useEffect(() => {
@@ -106,7 +114,7 @@ export function GridPage() {
               <input
                 type="date"
                 value={birthdate}
-                onChange={(e) => setBirthdate(e.target.value)}
+                onChange={handleBirthdateChange}
                 className="block w-full rounded-lg border border-gray-600 bg-gray-700 p-2 pl-8 text-sm text-white focus:border-fuchsia-500 focus:ring-fuchsia-500 sm:p-2.5 sm:pl-10 sm:text-base"
                 placeholder="Select your birthdate"
               />
