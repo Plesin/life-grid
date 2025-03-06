@@ -252,7 +252,7 @@ export const Tabs: React.FC<TabsProps> = ({
     <div className={`flex border-b border-gray-700 ${className}`}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
-          return React.cloneElement(child as React.ReactElement<any>, {
+          return React.cloneElement(child as React.ReactElement, {
             isActive: child.props.value === value,
             onClick: () => onValueChange(child.props.value),
           });
