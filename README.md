@@ -4,11 +4,11 @@
 
 [live app](https://fly.io/apps/life-grid-7933)
 
-I got the inspiration for this web page in a youtube video [6 Reasons to Retire as Soon as You Can](https://youtu.be/OuDCDp9Z9Y4?si=F0EkUL6OsIi4EvBP&t=70) recorded by [@JamesShack
+I got the inspiration for this web page in a youtube video [6 Reasons to Retire as Soon as You Can](https://youtu.be/OuDCDp9Z9Y4?si=F0EkUL6OsIi4EvBP&t=70) recorded by [@JamesShack. I highly recommend watching this video.
 ](https://www.youtube.com/@JamesShack)
 James mentions in the video the original source of his inspiration, which is [waitbutwhy](https://waitbutwhy.com/) blog.
 
-Specifically these are very interesting:
+Specifically these are very interesting and worth reading:
 
 - [Your Life in Weeks](https://waitbutwhy.com/2014/05/life-weeks.html)
 - [100 Blocks a Day](https://waitbutwhy.com/2016/10/100-blocks-day.html)
