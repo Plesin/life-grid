@@ -360,7 +360,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   className = "",
 }) => {
   return (
-    <div className={`flex flex-col space-y-2 ${className}`}>
+    <div className={`flex items-center justify-center gap-4 ${className}`}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child, {

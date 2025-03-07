@@ -5,7 +5,7 @@ import {
   differenceInMonths,
   differenceInWeeks,
 } from "date-fns";
-import { Calendar, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import React, {
   useState,
   useEffect,
@@ -444,28 +444,6 @@ export function GridPage() {
       ((datasetType === "deaths" && showFamousDeaths) ||
         (datasetType === "entrepreneurs" && showEntrepreneurs))
     ) {
-      const weekHeaders = [];
-      weekHeaders.push(
-        <div key="week-header-empty" className="w-8 pr-2 text-right"></div>,
-      );
-
-      for (let i = 0; i < unitsPerRow; i += 5) {
-        weekHeaders.push(
-          <div
-            key={`week-header-${i}`}
-            className="w-[15px] text-center text-[0.6rem] text-gray-400"
-          >
-            {i + 1}
-          </div>,
-        );
-      }
-
-      grid.push(
-        <div key="week-headers" className="mb-1 flex items-end">
-          {weekHeaders}
-        </div>,
-      );
-
       grid.push(
         <div key="week-of-year-label" className="mb-2 flex items-center">
           <div className="w-8"></div>
@@ -617,12 +595,9 @@ export function GridPage() {
         </h1>
 
         <div className="flex flex-col items-center">
-          <div className="mb-4 w-full max-w-md rounded-lg bg-gray-800 p-3 shadow-lg sm:mb-8 sm:p-6">
+          <div className="mb-4 w-full max-w-3xl rounded-lg bg-gray-800 p-3 shadow-lg sm:mb-8 sm:p-6">
             <div className="mb-3 flex flex-col items-center gap-2 sm:mb-6 sm:flex-row sm:gap-4">
               <div className="relative w-full flex-grow">
-                <div className="pointer-events-none absolute inset-y-0 left-0 z-10 flex items-center pl-3">
-                  <Calendar className="h-4 w-4 text-gray-400 sm:h-5 sm:w-5" />
-                </div>
                 <div className="w-full pl-8 sm:pl-10">
                   <input
                     aria-label="Enter your birthdate"
@@ -718,27 +693,22 @@ export function GridPage() {
             </div>
 
             {viewMode === "weeks" ? (
-              <div className="mt-4 space-y-4">
-                <div className="flex flex-col space-y-2">
-                  <RadioGroup
-                    value={datasetType}
-                    onChange={(value: string) => {
-                      setDatasetType(value);
-                      if (value === "deaths") {
-                        setShowFamousDeaths(true);
-                        setShowEntrepreneurs(false);
-                      } else {
-                        setShowFamousDeaths(false);
-                        setShowEntrepreneurs(true);
-                      }
-                    }}
-                    className="space-y-2"
-                  >
-                    <Radio value="deaths">Famous Deaths</Radio>
-                    <Radio value="entrepreneurs">Late Bloomers</Radio>
-                  </RadioGroup>
-                </div>
-              </div>
+              <RadioGroup
+                value={datasetType}
+                onChange={(value: string) => {
+                  setDatasetType(value);
+                  if (value === "deaths") {
+                    setShowFamousDeaths(true);
+                    setShowEntrepreneurs(false);
+                  } else {
+                    setShowFamousDeaths(false);
+                    setShowEntrepreneurs(true);
+                  }
+                }}
+              >
+                <Radio value="deaths">Famous Deaths</Radio>
+                <Radio value="entrepreneurs">Late Bloomers</Radio>
+              </RadioGroup>
             ) : null}
           </div>
         </div>
