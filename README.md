@@ -2,7 +2,7 @@
 
 ## Visualize your Life in boxes
 
-[live app](https://life-grid-7933.fly.dev/)
+[live app](https://life-grid.rapl.eu)
 
 I got the inspiration for this web page in a youtube video [6 Reasons to Retire as Soon as You Can](https://youtu.be/OuDCDp9Z9Y4?si=F0EkUL6OsIi4EvBP&t=70) recorded by [@JamesShack. I highly recommend watching this video.
 ](https://www.youtube.com/@JamesShack)
