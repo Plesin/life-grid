@@ -257,6 +257,8 @@ const lateBloomingEntrepreneurs: StatisticItem[] = [
   },
 ];
 
+export const loader = () => null;
+
 export function GridPage() {
   const bdFromStorage = LocalStorageUtil.get("birthdate");
   const [birthdate, setBirthdate] = useState<string>(bdFromStorage);
@@ -783,9 +785,9 @@ export function GridPage() {
                 </p>
               )
             : null}
-          {viewMode !== "weeks" && (
+          {viewMode !== "weeks" ? (
             <p className="mt-1">Click on any square to add an annotation.</p>
-          )}
+          ) : null}
         </div>
       </div>
     </div>
