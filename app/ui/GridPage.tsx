@@ -13,7 +13,6 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import { ClientOnly } from "remix-utils/client-only";
 
 import { LocalStorageUtil } from "../utils/LocalStorageUtil";
 
@@ -591,215 +590,206 @@ export function GridPage() {
   ]);
 
   return (
-    <ClientOnly>
-      {() => (
-        <div className="flex min-h-screen flex-col items-center bg-gray-900 px-2 py-6 text-gray-100 sm:px-4 sm:py-12">
-          <div className="w-full max-w-7xl">
-            <h1 className="mb-4 text-center text-2xl font-bold text-fuchsia-400 sm:mb-8 sm:text-3xl md:text-4xl">
-              Life Grid
-            </h1>
+    <div className="flex min-h-screen flex-col items-center bg-gray-900 px-2 py-6 text-gray-100 sm:px-4 sm:py-12">
+      <div className="w-full max-w-7xl">
+        <h1 className="mb-4 text-center text-2xl font-bold text-fuchsia-400 sm:mb-8 sm:text-3xl md:text-4xl">
+          Life Grid
+        </h1>
 
-            <div className="flex flex-col items-center">
-              <div className="mb-4 w-full max-w-3xl rounded-lg bg-gray-800 p-3 shadow-lg sm:mb-8 sm:p-6">
-                <div className="mb-3 flex flex-col items-center gap-2 sm:mb-6 sm:flex-row sm:gap-4">
-                  <div className="relative w-full flex-grow">
-                    <div className="w-full pl-8 sm:pl-10">
-                      <input
-                        aria-label="Enter your birthdate"
-                        type="date"
-                        value={birthdate}
-                        onChange={handleNativeDateChange}
-                        className="w-full rounded-lg border border-gray-600 bg-gray-700 p-2 pl-8 text-sm text-white focus:border-fuchsia-500 focus:ring-fuchsia-500 sm:p-2.5 sm:pl-10 sm:text-base"
-                      />
-                    </div>
-                  </div>
-                  <Button
-                    color="gray"
-                    onClick={handleClear}
-                    className="w-full sm:w-auto"
-                  >
-                    Clear
-                  </Button>
+        <div className="flex flex-col items-center">
+          <div className="mb-4 w-full max-w-3xl rounded-lg bg-gray-800 p-3 shadow-lg sm:mb-8 sm:p-6">
+            <div className="mb-3 flex flex-col items-center gap-2 sm:mb-6 sm:flex-row sm:gap-4">
+              <div className="relative w-full flex-grow">
+                <div className="w-full pl-8 sm:pl-10">
+                  <input
+                    aria-label="Enter your birthdate"
+                    type="date"
+                    value={birthdate}
+                    onChange={handleNativeDateChange}
+                    className="w-full rounded-lg border border-gray-600 bg-gray-700 p-2 pl-8 text-sm text-white focus:border-fuchsia-500 focus:ring-fuchsia-500 sm:p-2.5 sm:pl-10 sm:text-base"
+                  />
                 </div>
+              </div>
+              <Button
+                color="gray"
+                onClick={handleClear}
+                className="w-full sm:w-auto"
+              >
+                Clear
+              </Button>
+            </div>
 
-                {error ? (
-                  <div className="mb-2 text-center text-sm text-red-400 sm:mb-4 sm:text-base">
-                    {error}
-                  </div>
-                ) : null}
+            {error ? (
+              <div className="mb-2 text-center text-sm text-red-400 sm:mb-4 sm:text-base">
+                {error}
+              </div>
+            ) : null}
 
-                {age !== null ? (
-                  <div className="mb-2 text-center sm:mb-4">
-                    <p className="text-base sm:text-xl">
-                      {"You've lived "}
-                      <span className="font-bold text-fuchsia-400">
-                        {viewMode === "years"
-                          ? `${age} years`
-                          : viewMode === "months"
-                            ? `${ageInMonths} months`
-                            : `${ageInWeeks} weeks`}
-                      </span>
-                      {viewMode === "years" && age < 90 ? (
+            {age !== null ? (
+              <div className="mb-2 text-center sm:mb-4">
+                <p className="text-base sm:text-xl">
+                  {"You've lived "}
+                  <span className="font-bold text-fuchsia-400">
+                    {viewMode === "years"
+                      ? `${age} years`
+                      : viewMode === "months"
+                        ? `${ageInMonths} months`
+                        : `${ageInWeeks} weeks`}
+                  </span>
+                  {viewMode === "years" && age < 90 ? (
+                    <>
+                      {" "}
+                      with{" "}
+                      <span className="font-bold text-green-400">
+                        {90 - age} years
+                      </span>{" "}
+                      ahead
+                    </>
+                  ) : null}
+                  {viewMode === "months"
+                    ? ageInMonths &&
+                      ageInMonths < 1080 && (
                         <>
                           {" "}
                           with{" "}
                           <span className="font-bold text-green-400">
-                            {90 - age} years
+                            {1080 - ageInMonths} months
                           </span>{" "}
                           ahead
                         </>
-                      ) : null}
-                      {viewMode === "months"
-                        ? ageInMonths &&
-                          ageInMonths < 1080 && (
-                            <>
-                              {" "}
-                              with{" "}
-                              <span className="font-bold text-green-400">
-                                {1080 - ageInMonths} months
-                              </span>{" "}
-                              ahead
-                            </>
-                          )
-                        : null}
-                      {viewMode === "weeks" &&
-                      ageInWeeks &&
-                      ageInWeeks < 4680 ? (
-                        <>
-                          {" "}
-                          with{" "}
-                          <span className="font-bold text-green-400">
-                            {4680 - ageInWeeks} weeks
-                          </span>{" "}
-                          ahead
-                        </>
-                      ) : null}
-                    </p>
-                  </div>
-                ) : null}
-
-                <div className="mb-4 flex justify-center gap-2">
-                  <Button
-                    color={viewMode === "years" ? "primary" : "gray"}
-                    onClick={() => setViewMode("years")}
-                  >
-                    Years
-                  </Button>
-                  <Button
-                    color={viewMode === "months" ? "primary" : "gray"}
-                    onClick={() => setViewMode("months")}
-                  >
-                    Months
-                  </Button>
-                  <Button
-                    color={viewMode === "weeks" ? "primary" : "gray"}
-                    onClick={() => setViewMode("weeks")}
-                  >
-                    Weeks
-                  </Button>
-                </div>
-
-                {viewMode === "weeks" ? (
-                  <RadioGroup
-                    value={datasetType}
-                    onChange={(value: string) => {
-                      setDatasetType(value);
-                      if (value === "deaths") {
-                        setShowFamousDeaths(true);
-                        setShowEntrepreneurs(false);
-                      } else {
-                        setShowFamousDeaths(false);
-                        setShowEntrepreneurs(true);
-                      }
-                    }}
-                  >
-                    <Radio value="deaths">Famous Deaths</Radio>
-                    <Radio value="entrepreneurs">Late Bloomers</Radio>
-                  </RadioGroup>
-                ) : null}
-              </div>
-            </div>
-
-            <div className="relative w-full">
-              <div className="flex flex-col items-center">
-                <div
-                  ref={gridContainerRef}
-                  className="grid-container relative mx-auto max-w-full overflow-visible"
-                  style={{
-                    marginLeft:
-                      viewMode === "weeks" &&
-                      ((datasetType === "deaths" && showFamousDeaths) ||
-                        (datasetType === "entrepreneurs" && showEntrepreneurs))
-                        ? "2rem"
-                        : "0",
-                    marginRight:
-                      viewMode === "weeks" &&
-                      ((datasetType === "deaths" && showFamousDeaths) ||
-                        (datasetType === "entrepreneurs" && showEntrepreneurs))
-                        ? "0"
-                        : "0",
-                    marginTop:
-                      viewMode === "weeks" &&
-                      ((datasetType === "deaths" && showFamousDeaths) ||
-                        (datasetType === "entrepreneurs" && showEntrepreneurs))
-                        ? "0"
-                        : "0",
-                  }}
-                >
-                  {renderGrid}
-                </div>
-
-                <div className="mt-4 flex flex-col items-center gap-2 sm:mt-6 sm:flex-row sm:gap-6">
-                  <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded bg-fuchsia-600 sm:h-4 sm:w-4"></div>
-                    <span className="text-xs sm:text-sm">Time lived</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded border border-gray-700 bg-gray-800 sm:h-4 sm:w-4"></div>
-                    <span className="text-xs sm:text-sm">Time ahead</span>
-                  </div>
-                  {viewMode !== "weeks" && (
-                    <div className="flex items-center gap-2">
-                      <div className="flex h-3 w-3 items-center justify-center rounded border border-yellow-400 sm:h-4 sm:w-4">
-                        <Info className="h-2 w-2 text-yellow-400" />
-                      </div>
-                      <span className="text-xs sm:text-sm">Annotation</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 text-center text-xs text-gray-500 sm:mt-8 sm:text-sm">
-              <p>
-                This visualization represents life with each square representing
-                one{" "}
-                {viewMode === "years"
-                  ? "year"
-                  : viewMode === "months"
-                    ? "month"
-                    : "week"}
-                .
-              </p>
-              {viewMode === "weeks"
-                ? ((datasetType === "deaths" && showFamousDeaths) ||
-                    (datasetType === "entrepreneurs" && showEntrepreneurs)) && (
-                    <p className="mt-1">
-                      {datasetType === "deaths"
-                        ? "Hover over highlighted squares to see when famous people died."
-                        : "Hover over highlighted squares to see when successful people started later in life."}
-                    </p>
-                  )
-                : null}
-              {viewMode !== "weeks" ? (
-                <p className="mt-1">
-                  Click on any square to add an annotation.
+                      )
+                    : null}
+                  {viewMode === "weeks" && ageInWeeks && ageInWeeks < 4680 ? (
+                    <>
+                      {" "}
+                      with{" "}
+                      <span className="font-bold text-green-400">
+                        {4680 - ageInWeeks} weeks
+                      </span>{" "}
+                      ahead
+                    </>
+                  ) : null}
                 </p>
-              ) : null}
+              </div>
+            ) : null}
+
+            <div className="mb-4 flex justify-center gap-2">
+              <Button
+                color={viewMode === "years" ? "primary" : "gray"}
+                onClick={() => setViewMode("years")}
+              >
+                Years
+              </Button>
+              <Button
+                color={viewMode === "months" ? "primary" : "gray"}
+                onClick={() => setViewMode("months")}
+              >
+                Months
+              </Button>
+              <Button
+                color={viewMode === "weeks" ? "primary" : "gray"}
+                onClick={() => setViewMode("weeks")}
+              >
+                Weeks
+              </Button>
+            </div>
+
+            {viewMode === "weeks" ? (
+              <RadioGroup
+                value={datasetType}
+                onChange={(value: string) => {
+                  setDatasetType(value);
+                  if (value === "deaths") {
+                    setShowFamousDeaths(true);
+                    setShowEntrepreneurs(false);
+                  } else {
+                    setShowFamousDeaths(false);
+                    setShowEntrepreneurs(true);
+                  }
+                }}
+              >
+                <Radio value="deaths">Famous Deaths</Radio>
+                <Radio value="entrepreneurs">Late Bloomers</Radio>
+              </RadioGroup>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="relative w-full">
+          <div className="flex flex-col items-center">
+            <div
+              ref={gridContainerRef}
+              className="grid-container relative mx-auto max-w-full overflow-visible"
+              style={{
+                marginLeft:
+                  viewMode === "weeks" &&
+                  ((datasetType === "deaths" && showFamousDeaths) ||
+                    (datasetType === "entrepreneurs" && showEntrepreneurs))
+                    ? "2rem"
+                    : "0",
+                marginRight:
+                  viewMode === "weeks" &&
+                  ((datasetType === "deaths" && showFamousDeaths) ||
+                    (datasetType === "entrepreneurs" && showEntrepreneurs))
+                    ? "0"
+                    : "0",
+                marginTop:
+                  viewMode === "weeks" &&
+                  ((datasetType === "deaths" && showFamousDeaths) ||
+                    (datasetType === "entrepreneurs" && showEntrepreneurs))
+                    ? "0"
+                    : "0",
+              }}
+            >
+              {renderGrid}
+            </div>
+
+            <div className="mt-4 flex flex-col items-center gap-2 sm:mt-6 sm:flex-row sm:gap-6">
+              <div className="flex items-center gap-2">
+                <div className="h-3 w-3 rounded bg-fuchsia-600 sm:h-4 sm:w-4"></div>
+                <span className="text-xs sm:text-sm">Time lived</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-3 w-3 rounded border border-gray-700 bg-gray-800 sm:h-4 sm:w-4"></div>
+                <span className="text-xs sm:text-sm">Time ahead</span>
+              </div>
+              {viewMode !== "weeks" && (
+                <div className="flex items-center gap-2">
+                  <div className="flex h-3 w-3 items-center justify-center rounded border border-yellow-400 sm:h-4 sm:w-4">
+                    <Info className="h-2 w-2 text-yellow-400" />
+                  </div>
+                  <span className="text-xs sm:text-sm">Annotation</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      )}
-    </ClientOnly>
+
+        <div className="mt-4 text-center text-xs text-gray-500 sm:mt-8 sm:text-sm">
+          <p>
+            This visualization represents life with each square representing one{" "}
+            {viewMode === "years"
+              ? "year"
+              : viewMode === "months"
+                ? "month"
+                : "week"}
+            .
+          </p>
+          {viewMode === "weeks"
+            ? ((datasetType === "deaths" && showFamousDeaths) ||
+                (datasetType === "entrepreneurs" && showEntrepreneurs)) && (
+                <p className="mt-1">
+                  {datasetType === "deaths"
+                    ? "Hover over highlighted squares to see when famous people died."
+                    : "Hover over highlighted squares to see when successful people started later in life."}
+                </p>
+              )
+            : null}
+          {viewMode !== "weeks" ? (
+            <p className="mt-1">Click on any square to add an annotation.</p>
+          ) : null}
+        </div>
+      </div>
+    </div>
   );
 }
